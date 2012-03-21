@@ -302,10 +302,10 @@ class ARCFile(object):
     def _read_arc_record(self):
         "Reads out an arc record, formats it and returns it"
         #XXX:Noufal Stream payload here rather than just read it
-        r = self.fileobj.readline() # Drop the initial newline
-        if r == "":
-            return None
-        header = self.fileobj.readline()
+        header = self.fileobj.readline() # Drop the initial newline
+        if header == "":
+            header = self.fileobj.readline()
+        
         self.fileobj.readline() # Drop the separator newline
 
         if self.version == 1:
