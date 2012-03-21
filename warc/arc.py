@@ -309,7 +309,10 @@ class ARCFile(object):
         self.fileobj.readline() # Drop the separator newline
 
         if self.version == 1:
-            url, ip_address, date, content_type, length = header.split()
+            try:
+                url, ip_address, date, content_type, length = header.split()
+            except ValueError:
+                return None
             headers = dict(url = url, ip_address = ip_address,
                            date = date, content_type = content_type,
                            length = length)
