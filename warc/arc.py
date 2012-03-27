@@ -329,7 +329,7 @@ class ARCFile(object):
                            filename = filename, length = length)
             arc_header = ARCHeader(**headers)
         payload = self.fileobj.read(int(length))
-        print >> sys.stderr, ( 'Payload', payload.len, payload )
+        print >> sys.stderr, ( 'Payload', len(payload), payload )
 
         return ARCRecord(header = arc_header, payload = payload)
         
