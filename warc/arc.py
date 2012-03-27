@@ -9,6 +9,7 @@ import datetime
 import os
 import StringIO
 import warnings
+import sys
 
 from .utils import CaseInsensitiveDict
 
@@ -278,6 +279,7 @@ class ARCFile(object):
         payload1 = self.fileobj.readline()
         payload2 = self.fileobj.readline()
         version, reserved, organisation = payload1.split(None, 2)
+        print >> sys.stderr, ( 'Header', header, payload1, payload2 )
         self.fileobj.readline() # Lose the newline
         self.header_read = True
         
@@ -303,11 +305,13 @@ class ARCFile(object):
         "Reads out an arc record, formats it and returns it"
         #XXX:Noufal Stream payload here rather than just read it
         header = self.fileobj.readline() # Drop the initial newline
+        print >> sys.stderr, header
         if header == "":
             header = self.fileobj.readline()
+            print >> sys.stderr, header
         
-        self.fileobj.readline() # Drop the separator newline
-
+        print >> sys.stderr, self.fileobj.readline() # Drop the separator newline
+        
         if self.version == 1:
             try:
                 url, ip_address, date, content_type, length = header.split()
@@ -325,6 +329,7 @@ class ARCFile(object):
                            filename = filename, length = length)
             arc_header = ARCHeader(**headers)
         payload = self.fileobj.read(int(length))
+        print >> sys.stderr, ( 'Payload', payload.len, payload )
 
         return ARCRecord(header = arc_header, payload = payload)
         
@@ -343,6 +348,7 @@ class ARCFile(object):
         while record:
             yield record
             record = self.read()
+            print >> sys.stderr, record
     
     def close(self):
         self.fileobj.close()
