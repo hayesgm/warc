@@ -10,7 +10,7 @@ setup(
     license='BSD',
     author="Anand Chitipothu",
     author_email="anandology@gmail.com",
-    url="http://github.com/anandology/warc",
+    url="http://github.com/hayesgm/warc",
     packages=["warc"],
     platforms=["any"],
     package_data={'': ["LICENSE", "Readme.rst"]},
